@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" charset="utf-8">
+    <meta charset="utf-8"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js"></script>
+    <script>
+    // ページの読み込みを待つ
+    window.addEventListener('load', init);
+
+    function init() {
+
+      // サイズを指定
+      const width = 960;
+      const height = 540;
+
+      // レンダラーを作成
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector('#myCanvas')
+      });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+
+      // シーンを作成
+      const scene = new THREE.Scene();
+
+      // カメラを作成
+      const camera = new THREE.PerspectiveCamera(45, width / height);
+      camera.position.set(0, 0, +1000);
+
+      // 箱を作成
+      const geometry = new THREE.BoxGeometry(400, 400, 400);
+      const material = new THREE.MeshNormalMaterial();
+      const box = new THREE.Mesh(geometry, material);
+      //名前をつけよう
+      box.name = "a box";
+      //x速度
+      box.x_velocity = Math.floor(Math.random()*10);
+      //y速度
+      box.y_velocity = Math.floor(Math.random()*10);
+      scene.add(box);
+
+      tick();
+
+      // 毎フレーム時に実行されるループイベントです
+      function tick() {
+        box.rotation.x += 0.01;
+        box.rotation.y += 0.01;
+
+        box.position.x += box.x_velocity;
+        box.position.y += box.y_velocity;
+
+        //はねかえる
+        if(Math.abs(box.position.x) > 100 ){
+            box.x_velocity = -1 * box.x_velocity;
+        }
+
+        //はねかえる
+        if(Math.abs(box.position.y) > 100 ){
+            box.y_velocity = -1 * box.y_velocity;
+        }
+
+        renderer.render(scene, camera); // レンダリング
+
+        requestAnimationFrame(tick);
+      }
+
+    }
+
+    </script>
+</head>
+<body>
+<canvas id="myCanvas"></canvas>
+<p><a href="https://ics.media/tutorial-three/quickstart/">リンク</a></p>
+</body>
+</html>
