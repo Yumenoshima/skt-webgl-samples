@@ -10,8 +10,6 @@
 
     function init() {
 
-    　const loader = new THREE.TextureLoader();
-
       // サイズを指定
       const width = 960;
       const height = 540;
@@ -34,8 +32,7 @@
 
       // 箱を作成
       const geometry = new THREE.BoxGeometry(400, 400, 400);
-<!--      const material = new THREE.MeshNormalMaterial();-->
-      const material = new THREE.MeshLambertMaterial({map: loader.load('./img/senkyo_400x400.jpg')});
+      const material = new THREE.MeshNormalMaterial();
       const box = new THREE.Mesh(geometry, material);
       //名前をつけよう
       box.name = "a box";
