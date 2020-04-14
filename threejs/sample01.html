@@ -32,7 +32,18 @@
 
       // 箱を作成
       const geometry = new THREE.BoxGeometry(400, 400, 400);
-      const material = new THREE.MeshNormalMaterial();
+<!--      const material = new THREE.MeshNormalMaterial();-->
+
+      // 画像を読み込む
+      const loader = new THREE.TextureLoader();
+      const texture = loader.load('img/senkyo_400x400.jpg');
+      // マテリアルにテクスチャーを設定
+      const material = new THREE.MeshStandardMaterial({
+        map: texture
+      });
+
+
+
       const box = new THREE.Mesh(geometry, material);
       //名前をつけよう
       box.name = "a box";
@@ -41,6 +52,14 @@
       //y速度
       box.y_velocity = Math.floor(Math.random()*10);
       scene.add(box);
+
+      // 平行光源
+      const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
+      directionalLight.position.set(1, 1, 1);
+      // シーンに追加
+      scene.add(directionalLight);
+
+
 
       tick();
 
